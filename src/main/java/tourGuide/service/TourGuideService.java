@@ -21,6 +21,7 @@ import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.restTemplate.GpsRestTemplate;
 import tourGuide.tracker.Tracker;
 import tourGuide.model.User;
 import tourGuide.model.UserReward;
@@ -30,14 +31,16 @@ import tripPricer.TripPricer;
 @Service
 public class TourGuideService {
 	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-	private final GpsUtil gpsUtil;
+	//private final GpsUtil gpsUtil;
+	private GpsRestTemplate gpsRestTemplate;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
 	boolean testMode = true;
 	
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
-		this.gpsUtil = gpsUtil;
+	//	this.gpsUtil = gpsUtil;
+		this.gpsRestTemplate = gpsRestTemplate;
 		this.rewardsService = rewardsService;
 		
 		if(testMode) {
@@ -86,7 +89,7 @@ public class TourGuideService {
 	// make this method run on a separate thread
 
 	public VisitedLocation trackUserLocation(User user) {
-		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+		VisitedLocation visitedLocation = gpsRestTemplate.getUserLocation(user.getUserId());
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
 		return visitedLocation;
@@ -94,7 +97,7 @@ public class TourGuideService {
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for(Attraction attraction : gpsUtil.getAttractions()) {
+		for(Attraction attraction : gpsRestTemplate.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}

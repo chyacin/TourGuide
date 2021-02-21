@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class GpsUri {
+public class RestTemplateConfig {
 
     @Bean
-    RestTemplate getRestTemplate(RestTemplateBuilder restTemplateBuilder){
+    RestTemplate getRestTemplate(org.springframework.boot.web.client.RestTemplateBuilder restTemplateBuilder){
         return restTemplateBuilder.build();
     }
 

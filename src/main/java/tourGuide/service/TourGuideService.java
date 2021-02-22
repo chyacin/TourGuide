@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
@@ -31,15 +30,13 @@ import tripPricer.TripPricer;
 @Service
 public class TourGuideService {
 	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-	//private final GpsUtil gpsUtil;
 	private GpsRestTemplate gpsRestTemplate;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
 	boolean testMode = true;
 	
-	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
-	//	this.gpsUtil = gpsUtil;
+	public TourGuideService(GpsRestTemplate gpsRestTemplate, RewardsService rewardsService) {
 		this.gpsRestTemplate = gpsRestTemplate;
 		this.rewardsService = rewardsService;
 		

@@ -11,6 +11,7 @@ import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.model.User;
 import tourGuide.model.UserReward;
+import tourGuide.restTemplate.GpsRestTemplate;
 
 @Service
 public class RewardsService {
@@ -20,11 +21,11 @@ public class RewardsService {
     private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 200;
-	private final GpsUtil gpsUtil;
+	private GpsRestTemplate gpsRestTemplate;
 	private final RewardCentral rewardsCentral;
 	
-	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {
-		this.gpsUtil = gpsUtil;
+	public RewardsService(GpsRestTemplate gpsRestTemplate, RewardCentral rewardCentral) {
+		this.gpsRestTemplate = gpsRestTemplate;
 		this.rewardsCentral = rewardCentral;
 	}
 	
@@ -38,7 +39,7 @@ public class RewardsService {
 	
 	public void calculateRewards(User user) {
 		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsUtil.getAttractions();
+		List<Attraction> attractions = gpsRestTemplate.getAttractions();
 		
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {

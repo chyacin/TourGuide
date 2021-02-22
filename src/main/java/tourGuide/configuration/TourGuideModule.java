@@ -5,19 +5,20 @@ import org.springframework.context.annotation.Configuration;
 
 import gpsUtil.GpsUtil;
 import rewardCentral.RewardCentral;
+import tourGuide.restTemplate.GpsRestTemplate;
 import tourGuide.service.RewardsService;
 
 @Configuration
 public class TourGuideModule {
 	
 	@Bean
-	public GpsUtil getGpsUtil() {
-		return new GpsUtil();
+	public GpsRestTemplate getGpsRestTemplate() {
+		return new GpsRestTemplate();
 	}
 	
 	@Bean
 	public RewardsService getRewardsService() {
-		return new RewardsService(getGpsUtil(), getRewardCentral());
+		return new RewardsService(getGpsRestTemplate(), getRewardCentral());
 	}
 	
 	@Bean

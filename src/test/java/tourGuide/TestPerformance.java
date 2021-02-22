@@ -16,6 +16,7 @@ import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.restTemplate.GpsRestTemplate;
+import tourGuide.restTemplate.RewardsRestTemplate;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.model.User;
@@ -47,7 +48,7 @@ TestPerformance {
 	@Test
 	public void highVolumeTrackLocation() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
 		InternalTestHelper.setInternalUserNumber(100);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
@@ -73,7 +74,7 @@ TestPerformance {
 	@Test
 	public void highVolumeGetRewards() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 
 		// Users should be incremented up to 100,000, and test finishes within 20 minutes
 		InternalTestHelper.setInternalUserNumber(100);

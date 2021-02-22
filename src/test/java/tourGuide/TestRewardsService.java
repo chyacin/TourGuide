@@ -15,6 +15,7 @@ import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.restTemplate.GpsRestTemplate;
+import tourGuide.restTemplate.RewardsRestTemplate;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.model.User;
@@ -25,7 +26,7 @@ public class TestRewardsService {
 	@Test
 	public void userGetRewards() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
@@ -42,7 +43,7 @@ public class TestRewardsService {
 	@Test
 	public void isWithinAttractionProximity() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		Attraction attraction = gpsRestTemplate.getAttractions().get(0);
 		assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
 	}
@@ -51,7 +52,7 @@ public class TestRewardsService {
 	@Test
 	public void nearAllAttractions() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
 		InternalTestHelper.setInternalUserNumber(1);

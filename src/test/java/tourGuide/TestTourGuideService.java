@@ -15,6 +15,7 @@ import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.restTemplate.GpsRestTemplate;
+import tourGuide.restTemplate.RewardsRestTemplate;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.model.User;
@@ -25,7 +26,7 @@ public class TestTourGuideService {
 	@Test
 	public void getUserLocation() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		
@@ -38,7 +39,7 @@ public class TestTourGuideService {
 	@Test
 	public void addUser() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		
@@ -60,7 +61,7 @@ public class TestTourGuideService {
 	@Test
 	public void getAllUsers() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		
@@ -81,7 +82,7 @@ public class TestTourGuideService {
 	@Test
 	public void trackUser() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		
@@ -97,7 +98,7 @@ public class TestTourGuideService {
 	@Test
 	public void getNearbyAttractions() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		
@@ -113,7 +114,7 @@ public class TestTourGuideService {
 	
 	public void getTripDeals() {
 		GpsRestTemplate gpsRestTemplate = new GpsRestTemplate();
-		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardCentral());
+		RewardsService rewardsService = new RewardsService(gpsRestTemplate, new RewardsRestTemplate());
 		InternalTestHelper.setInternalUserNumber(0);
 		TourGuideService tourGuideService = new TourGuideService(gpsRestTemplate, rewardsService);
 		

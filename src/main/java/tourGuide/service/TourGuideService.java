@@ -2,16 +2,11 @@ package tourGuide.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import dtoModel.ClosestAttractionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -102,6 +97,29 @@ public class TourGuideService {
 		
 		return nearbyAttractions;
 	}
+
+	public List<ClosestAttractionDTO> getFiveClosestAttractions(VisitedLocation visitedLocation, User user) {
+
+		List<ClosestAttractionDTO> topFiveAttractions = new ArrayList<>();
+		List<ClosestAttractionDTO> allAttraction = new ArrayList<>();
+		for(Attraction attraction : gpsRestTemplate.getAttractions()) {
+			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
+				ClosestAttractionDTO dto =
+						new ClosestAttractionDTO(visitedLocation, attraction);
+				allAttraction.add(dto);
+			}
+		}
+		Collections.sort(allAttraction);
+		int limit = Math.min(5, allAttraction.size());
+		for (int i = 0; i < limit; i++) {
+			rewardsService.getRewardPoints(allAttraction.get(i).getAttraction(), user);
+			topFiveAttractions.add(allAttraction.get(i));
+		}
+
+		return topFiveAttractions;
+	}
+
+
 	
 	private void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() { 

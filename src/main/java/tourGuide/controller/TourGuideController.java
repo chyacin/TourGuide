@@ -2,6 +2,7 @@ package tourGuide.controller;
 
 import java.util.*;
 
+import gpsUtil.location.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class TourGuideController {
     @RequestMapping("/getNearbyAttractions") 
     public String getNearbyAttractions(@RequestParam String userName) {
     	VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-    	return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
+    	return JsonStream.serialize(tourGuideService.getFiveClosestAttractions(visitedLocation, getUser(userName)));
     }
     
     @RequestMapping("/getRewards") 
@@ -51,8 +52,8 @@ public class TourGuideController {
     	return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
     }
     
-    @RequestMapping("/getAllCurrentLocations")
-   public String getAllCurrentLocations() {
+
+/*
         // TODO: Get a list of every user's most recent location as JSON
         //- Note: does not use gpsUtil to query for their current location,
         //        but rather gathers the user's current location from their stored location history.
@@ -65,16 +66,16 @@ public class TourGuideController {
 
 
         return JsonStream.serialize("");
-    }
-
-    /*public String getAllCurrentLocations() {
+    */
+@RequestMapping("/getAllCurrentLocations")
+    public String getAllCurrentLocations() {
         Map<UUID, Location> allUsersVisitedLocations = new HashMap<>();
         for(User user : tourGuideService.getAllUsers()){
             VisitedLocation visitedLocation = tourGuideService.getUserLocation(user);
             allUsersVisitedLocations.put(visitedLocation.userId, visitedLocation.location);
         }
         return JsonStream.serialize(allUsersVisitedLocations);
-    }*/
+    }
     
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
